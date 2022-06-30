@@ -1,0 +1,54 @@
+﻿@{
+    var err = ViewData["err"] as String[];
+    var data = ViewData["data"];
+}
+<h1>
+    Регистрация нового пользователя
+</h1>
+<form action="/Home/RegUser" method="post" >
+    Имя:    <input type="text"     name="RealName"/>
+    @if (!String.IsNullOrEmpty(err?[1]))
+    {
+        @err[1]
+    }
+    else
+    {
+        @data
+    }
+    <br/>
+    Логин:  <input type="text"     name="Login"/>
+    @if (!String.IsNullOrEmpty(err?[2]))
+    {
+        @err[2]
+    }
+     else
+    {
+        @data
+    }
+    <br/>
+
+     Пароль:  <input type="password"     name="Password1"/>
+    @if (!String.IsNullOrEmpty(err?[3]))
+    {
+        @err[3]
+    }
+    <br/>
+    Повторный Пароль:  <input type="password"     name="Password2"/>
+    @if (!String.IsNullOrEmpty(err?[4]))
+    {
+        @err[4]
+    }
+    <br/>
+ 
+    E-mail: <input type="email"    name="Email"  
+     @if (!String.IsNullOrEmpty(err?[5]))
+    {
+        @err[5]
+    }
+     else
+    {
+        @data
+    }
+    /><br/>
+    <button type="submit">Зарегистрироваться</button>
+</form>

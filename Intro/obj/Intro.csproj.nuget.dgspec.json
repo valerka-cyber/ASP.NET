@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Академия\\asp.net\\Intro\\Intro.csproj": {}
+    "C:\\Users\\Valerii\\source\\repos\\valerka-cyber\\ASP.NET\\Intro\\Intro.csproj": {}
   },
   "projects": {
-    "D:\\Академия\\asp.net\\Intro\\Intro.csproj": {
+    "C:\\Users\\Valerii\\source\\repos\\valerka-cyber\\ASP.NET\\Intro\\Intro.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Академия\\asp.net\\Intro\\Intro.csproj",
+        "projectUniqueName": "C:\\Users\\Valerii\\source\\repos\\valerka-cyber\\ASP.NET\\Intro\\Intro.csproj",
         "projectName": "Intro",
-        "projectPath": "D:\\Академия\\asp.net\\Intro\\Intro.csproj",
+        "projectPath": "C:\\Users\\Valerii\\source\\repos\\valerka-cyber\\ASP.NET\\Intro\\Intro.csproj",
         "packagesPath": "C:\\Users\\Valerii\\.nuget\\packages\\",
-        "outputPath": "D:\\Академия\\asp.net\\Intro\\obj\\",
+        "outputPath": "C:\\Users\\Valerii\\source\\repos\\valerka-cyber\\ASP.NET\\Intro\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Valerii\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -39,6 +39,22 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.6, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
