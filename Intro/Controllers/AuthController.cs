@@ -1,70 +1,50 @@
-﻿using Intro.Models;
-using Intro.Services;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Intro.Controllers
 {
-    public class HomeController : Controller
-    {
-        private readonly ILogger<HomeController> _logger;
-        private readonly RandomService _randomService;
-        private readonly IHasher _hasher;
+  
+    public class AuthController : Controller
+    {  
+        private readonly Services.IHasher _hasher;
         private readonly DAL.Context.IntroContext _introContext;
 
-        public HomeController(ILogger<HomeController> logger, 
-            RandomService randomService, IHasher hasher,
-            DAL.Context.IntroContext introContext)
+        public AuthController(Services.IHasher hasher, DAL.Context.IntroContext introContext)
         {
-            _logger = logger;
-            _randomService =randomService;
-            _hasher =hasher;
-            _introContext =introContext;
+            _hasher = hasher;
+            _introContext = introContext;
         }
-
         public IActionResult Index()
         {
-            ViewData["rnd"] ="<b>" +  _randomService.Integer + "</b>";
-            ViewBag.hash = _hasher.Hash("123");
-            ViewData["UsersCount"] = _introContext.Users.Count();
-            //ViewData["UsersName"] = _introContext.Users.Select(x=>x.RealName);
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Register()
         {
+        String err = HttpContext.Session.GetString("RegError");
+            if(err != null)
+            {
+                ViewData["Error"] = err;
+                ViewData["err"] = err.Split(";");
+                HttpContext.Session.Remove("RegError");
+
+                Models.RegUserModel UserData = JsonConvert.DeserializeObject<Models.RegUserModel>
+                    (HttpContext.Session.GetString("UserData"));
+
+                ViewData["UserData"] = HttpContext.Session.GetString("UserData")
+            }
             return View();
         }
 
-        public IActionResult About()
-        {
-            var model = new AboutModel
-            {
-                Data = "The Model Data"
-            };
-            return View(model);
-        }
-
-        public IActionResult Contacts()
-        {
-            var model = new ContactsModel
-            {
-                Name = "Valeriia",
-                numberPhohe = "+380983383672",
-                adress = "st.Primorskaya"
-            };
-            return View(model);
-        }
-      
         [HttpPost] //следующий метод срабатывает на пост запрос
-        
+
         //Метод может автоматически собрать все переданные данные в модель
         // по совпадению имен
         public IActionResult RegUser(Models.RegUserModel UserData)
         {
             // return Json(UserData);  // способ проверить передачу данных
             String[] err = new String[6];
-            String data =" ";
+            String data = " ";
 
             if (UserData == null)
             {
@@ -148,17 +128,14 @@ namespace Intro.Controllers
                     _introContext.SaveChanges();
                 }
             }
-            ViewData["err"] = err;
-            ViewData["UserData"] = UserData;
-            ViewData["data"] = data;
-            return View("Register");
+            //ViewData["err"] = err;
+            HttpContext.Session.SetString("UserData", JsonConvert.SerializeObject(UserData));
+            HttpContext.Session.SetString("RegError",
+                 String.Join(";", err));
+            //ViewData["data"] = data;
+            //return View("Register");
+            return RedirectToAction("Register");
 
-        }
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel {
-                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

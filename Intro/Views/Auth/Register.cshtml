@@ -5,7 +5,10 @@
 <h1>
     Регистрация нового пользователя
 </h1>
-<form action="/Home/RegUser" method="post" >
+
+@*@ViewData["Error"]*@
+@ViewData["UserData"]
+<form action="/Auth/RegUser" method="post" >
     Имя:    <input type="text"     name="RealName"/>
     @if (!String.IsNullOrEmpty(err?[1]))
     {
@@ -52,3 +55,12 @@
     /><br/>
     <button type="submit">Зарегистрироваться</button>
 </form>
+
+
+@{
+    var UserData = ViewData["UserData"] as RegUserModel; 
+}
+@if(UserData?.Avatar != null)
+{
+    <img src="/img/@UserData.Avatar.FileName" />
+}
