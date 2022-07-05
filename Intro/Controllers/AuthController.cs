@@ -31,7 +31,7 @@ namespace Intro.Controllers
                 Models.RegUserModel UserData = JsonConvert.DeserializeObject<Models.RegUserModel>
                     (HttpContext.Session.GetString("UserData"));
 
-                ViewData["UserData"] = HttpContext.Session.GetString("UserData")
+                ViewData["UserData"] = HttpContext.Session.GetString("UserData");
             }
             return View();
         }

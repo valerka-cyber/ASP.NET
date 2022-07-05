@@ -27,7 +27,13 @@ namespace Intro.Controllers
             ViewData["rnd"] ="<b>" +  _randomService.Integer + "</b>";
             ViewBag.hash = _hasher.Hash("123");
             ViewData["UsersCount"] = _introContext.Users.Count();
-            //ViewData["UsersName"] = _introContext.Users.Select(x=>x.RealName);
+            #region Вывод пользователей на экран
+            foreach (var user in _introContext.Users)
+            {
+                ViewData["user"] = user.RealName;           
+                
+            }
+            #endregion
             return View();
         }
 
